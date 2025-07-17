@@ -4,10 +4,15 @@ let computerScore = 0;
 let roundsPlayed = 1;
 const totalRounds = 5;
 
+let humanChoice = "";
+let computerChoice = "";
+
 function getComputerChoice() {  
     let options = ["rock", "paper", "scissors"];
-    return options[Math.floor(Math.random() * options.length)];
+    return options[Math.floor(Math.random()*options.length)];
 }
+// console.log(getComputerChoice())
+
 
 // Add Function to display current round, result and score, prompt
 function updateDisplay(result, prompt = "") {
@@ -16,12 +21,11 @@ function updateDisplay(result, prompt = "") {
     document.getElementById("score").textContent = `Total Score: You ${humanScore} - Computer ${computerScore}`;
     document.getElementById("prompt").textContent = prompt;
 }
-
 function playRound(humanChoice) {
     const computerChoice = getComputerChoice();
     let result = "";
 
-    if (humanChoice === computerChoice) {
+  if (humanChoice === computerChoice) {
         result = `You chose ${humanChoice}, Computer chose ${computerChoice}. It's a tie!`;
     } else if (
         (humanChoice === "rock" && computerChoice === "scissors") ||
