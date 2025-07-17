@@ -3,14 +3,14 @@
 
 //Step 2: Write logic for get computer choice
 
+let humanChoice = "";
+let computerChoice = "";
+
 function getComputerChoice() {  
     let options = ["rock", "paper", "scissors"];
-    return computerChoice = options[Math.floor(Math.random()*options.length)];
+    return options[Math.floor(Math.random()*options.length)];
 }
 // console.log(getComputerChoice())
-// Notes: decided to just google for solution and focus on understanding the code
-// need to use the math.floor function to round the random number
-// use of square brackets for array, round brackets for function
 
 
 // Step 3: Write logic for get human choice
@@ -20,13 +20,12 @@ function getHumanChoice() {
     return humanChoice = humanInput.toLowerCase();
 }
 // console.log(getHumanChoice())
-// Notes: learn how to use windows prompt, standardize conversion to lower
-// defined variables need to be within the function. also chose double vs single quotes.
+
 
 // Step 4: Declare score variable
 
-var humanScore = 0
-var computerScore = 0
+let humanScore = 0;
+let computerScore = 0;
 
 // Step 5: Write Logic for single round
 
@@ -47,9 +46,8 @@ function playRound(humanChoice, computerChoice){
     }
 }
 
-// playRound(getHumanChoice(),getComputerChoice())
-// console.log("You chose " + humanChoice + ", Computer chose " + computerChoice + ", Current Score " + humanScore + "(human), " +computerScore +"(computer)") 
-//Notes: Got stuck at it's a draw cos variables were undefined. realised i need to call function first.
+playRound()
+console.log("You chose " + humanChoice + ", Computer chose " + computerChoice + ", Current Score " + humanScore + "(human), " +computerScore +"(computer)") 
 
 // Step 6: Play 5 rounds, Display result
 
