@@ -1,70 +1,66 @@
-// Step 1. Create landing page. Test Hello world
-// console.log("hello world");
-
-//Step 2: Write logic for get computer choice
+//Move defined terms to the top for easy reference
+let humanScore = 0;
+let computerScore = 0;
+let roundsPlayed = 1;
+const totalRounds = 5;
 
 function getComputerChoice() {  
     let options = ["rock", "paper", "scissors"];
-    return computerChoice = options[Math.floor(Math.random()*options.length)];
+    return options[Math.floor(Math.random() * options.length)];
 }
-// console.log(getComputerChoice())
-// Notes: decided to just google for solution and focus on understanding the code
-// need to use the math.floor function to round the random number
-// use of square brackets for array, round brackets for function
 
-
-// Step 3: Write logic for get human choice
-
-function getHumanChoice() {
-    let humanInput = prompt("type rock, paper or scissors");
-    return humanChoice = humanInput.toLowerCase();
+// Add Function to display current round, result and score, prompt
+function updateDisplay(result, prompt = "") {
+    document.getElementById("round-info").textContent = `Round: ${roundsPlayed}`;
+    document.getElementById("result").textContent = result;
+    document.getElementById("score").textContent = `Total Score: You ${humanScore} - Computer ${computerScore}`;
+    document.getElementById("prompt").textContent = prompt;
 }
-// console.log(getHumanChoice())
-// Notes: learn how to use windows prompt, standardize conversion to lower
-// defined variables need to be within the function. also chose double vs single quotes.
 
-// Step 4: Declare score variable
+function playRound(humanChoice) {
+    const computerChoice = getComputerChoice();
+    let result = "";
 
-var humanScore = 0
-var computerScore = 0
-
-// Step 5: Write Logic for single round
-
-function playRound(humanChoice, computerChoice){
-    if (humanChoice == computerChoice) {
-    } else if (humanChoice == "rock" && computerChoice == "paper") {
-        computerScore++;
-    } else if (humanChoice == "rock" && computerChoice == "scissors") {
+    if (humanChoice === computerChoice) {
+        result = `You chose ${humanChoice}, Computer chose ${computerChoice}. It's a tie!`;
+    } else if (
+        (humanChoice === "rock" && computerChoice === "scissors") ||
+        (humanChoice === "scissors" && computerChoice === "paper") ||
+        (humanChoice === "paper" && computerChoice === "rock")
+    ) {
         humanScore++;
-    } else if (humanChoice == "scissors" && computerChoice == "paper") {
-        humanScore++;
-    } else if (humanChoice == "scissors" && computerChoice == "rock") {
+        result = `You win this round! You chose ${humanChoice} and won Computer's' ${computerChoice}.`;
+    } else {
         computerScore++;
-    } else if (humanChoice == "paper" && computerChoice == "rock") {
-        humanScore++;
-    } else if (humanChoice == "paper" && computerChoice == "scissors") {
-        computerScore++;
+        result = `Computer wins this round! You chose ${humanChoice} and lost to Computer's ${computerChoice}.`;
     }
-}
 
-// playRound(getHumanChoice(),getComputerChoice())
-// console.log("You chose " + humanChoice + ", Computer chose " + computerChoice + ", Current Score " + humanScore + "(human), " +computerScore +"(computer)") 
-//Notes: Got stuck at it's a draw cos variables were undefined. realised i need to call function first.
-
-// Step 6: Play 5 rounds, Display result
-
-function playGame(){
-    for (let round = 1; round <=5; round++){
-        playRound(getHumanChoice(),getComputerChoice())
-        console.log("You chose " + humanChoice + ", Computer chose " + computerChoice + ", Current Score " + humanScore + "(human), " +computerScore +"(computer)") 
+    let promptMsg = "";
+    if (roundsPlayed < totalRounds) {
+        promptMsg = "Click a button to play the next round!";
     }
+
+    updateDisplay(result, promptMsg);
     
-    if (humanScore == 3){
-        console.log("You win the game")
-    } else if (computerScore == 3) {
-        console.log("Computer wins. Better luck next time")
-    } else 
-        console.log("No one wins. Try Again.")
+    if (roundsPlayed >= totalRounds) {
+        if (humanScore > computerScore) {
+            setTimeout(() => alert("You win the game!"), 100);
+        } else if (computerScore > humanScore) {
+            setTimeout(() => alert("Computer wins. Better luck next time."), 100);
+        } else {
+            setTimeout(() => alert("No one wins. Try Again."), 100);
+        }
+        // Reset for a new game
+        humanScore = 0;
+        computerScore = 0;
+        roundsPlayed = 1;
+        updateDisplay("Game reset! Click a button to get started");
+    } else {
+        roundsPlayed++;
+    }
 }
 
-playGame()
+//Event handlers passes the value directly into the playRound function, where it becomes humanChoice
+document.getElementById("rock").addEventListener("click", () => playRound("rock"));
+document.getElementById("paper").addEventListener("click", () => playRound("paper"));
+document.getElementById("scissors").addEventListener("click", () => playRound("scissors"));
